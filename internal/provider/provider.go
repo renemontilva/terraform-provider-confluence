@@ -43,6 +43,8 @@ func (p *ConfluenceProvider) Metadata(ctx context.Context, req provider.Metadata
 // Schema defines the provider-level schema for configuration data.
 func (p *ConfluenceProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: `Confluence provider interacts with atlassian confluence cloud service.
+		You must configured the provider with the proper credentials before you can use it.`,
 		Attributes: map[string]schema.Attribute{
 			"host": schema.StringAttribute{
 				MarkdownDescription: "Confluence's service hostname",

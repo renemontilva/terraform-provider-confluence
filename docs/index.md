@@ -3,18 +3,32 @@
 page_title: "confluence Provider"
 subcategory: ""
 description: |-
-  
+  Confluence provider interacts with atlassian confluence cloud service.
+          You must configured the provider with the proper credentials before you can use it.
 ---
 
 # confluence Provider
 
-
+Confluence provider interacts with atlassian confluence cloud service.
+		You must configured the provider with the proper credentials before you can use it.
 
 ## Example Usage
 
 ```terraform
 # Using environment variables
+# export CONFLUENCE_TOKEN=123token
+# export CONFLUENCE_HOST=youruser.atlassian.net
+# export CONFLUENCE_USER=youremail@example.com
+
 provider "confluence" {
+
+}
+
+# Adding arguments to the provider block 
+provider "confluence" {
+  host  = "user.atlassian.net"
+  user  = "user@example.com"
+  token = "123token"
 
 }
 ```

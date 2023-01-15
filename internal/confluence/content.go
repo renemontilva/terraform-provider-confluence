@@ -78,6 +78,9 @@ func (a *API) CreateContent(c *Content) error {
 	if err != nil {
 		return err
 	}
+	if resp.StatusCode != http.StatusOK {
+		return fmt.Errorf("Create Content API failed, message: %s", string(b))
+	}
 	json.Unmarshal(b, c)
 
 	return nil
@@ -99,8 +102,14 @@ func (a *API) UpdateContent(c *Content) error {
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("Update Content error: %v", resp.StatusCode)
+
+		return fmt.Errorf("Update Content API failed, message:: %v", string(b))
 	}
 
 	return nil
@@ -115,8 +124,13 @@ func (a *API) DeleteContent(id string) error {
 	if err != nil {
 		return fmt.Errorf("Delete Content error: %v", resp.StatusCode)
 	}
+	defer resp.Body.Close()
+	b, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
 	if resp.StatusCode != http.StatusNoContent {
-		return fmt.Errorf("Delete Content, response code error: %v", resp.StatusCode)
+		return fmt.Errorf("Delete Content API failed, message:: %v", string(b))
 	}
 
 	return nil

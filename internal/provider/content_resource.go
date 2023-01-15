@@ -46,7 +46,7 @@ func (r *ContentResource) Metadata(ctx context.Context, req resource.MetadataReq
 func (r *ContentResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "Content resource, creates a page on confluence service",
+		MarkdownDescription: "The resource ```content``` creates a new piece of content.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -57,11 +57,11 @@ func (r *ContentResource) Schema(ctx context.Context, req resource.SchemaRequest
 				},
 			},
 			"type": schema.StringAttribute{
-				MarkdownDescription: "The type of new content, eg: 'page', 'blogpost', etc",
+				MarkdownDescription: "The type of the new content. Custom content types defined by apps are also supported. eg. 'page', 'blogpost', 'comment' etc.",
 				Required:            true,
 			},
 			"title": schema.StringAttribute{
-				MarkdownDescription: "Document title",
+				MarkdownDescription: "Defines the document title.",
 				Required:            true,
 			},
 			"space": schema.StringAttribute{
@@ -159,8 +159,14 @@ func (r *ContentResource) Read(ctx context.Context, req resource.ReadRequest, re
 	// If applicable, this is a great opportunity to initialize any necessary
 	// provider client data and make a call using it.
 	content, err := r.client.GetContentById(data.Id.ValueString())
+
 	if err != nil {
-		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to read example, got error: %s", err))
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to read content, got error: %s", err))
+		return
+	}
+
+	if content.Id == "" {
+		resp.Diagnostics.AddError("Client Error", fmt.Sprintf("content id is empty, got error: %s", fmt.Errorf("content object: %v", content)))
 		return
 	}
 	// Overwrite ContentResourceModel with values returned from confluence API

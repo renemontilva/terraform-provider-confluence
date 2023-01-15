@@ -3,12 +3,12 @@
 page_title: "confluence_content Resource - terraform-provider-confluence"
 subcategory: ""
 description: |-
-  Content resource, creates a page on confluence service
+  The resource content creates a new piece of content.
 ---
 
 # confluence_content (Resource)
 
-Content resource, creates a page on confluence service
+The resource ```content``` creates a new piece of content.
 
 ## Example Usage
 
@@ -28,8 +28,8 @@ resource "confluence_content" "content" {
 
 - `body` (String) The body of the new content.
 - `space` (String) The space that the content is being created in.
-- `title` (String) Document title
-- `type` (String) The type of new content, eg: 'page', 'blogpost', etc
+- `title` (String) Defines the document title.
+- `type` (String) The type of the new content. Custom content types defined by apps are also supported. eg. 'page', 'blogpost', 'comment' etc.
 
 ### Read-Only
 
