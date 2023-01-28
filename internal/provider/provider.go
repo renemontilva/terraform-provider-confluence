@@ -178,9 +178,12 @@ func (p *ConfluenceProvider) Configure(ctx context.Context, req provider.Configu
 func (p *ConfluenceProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewContentResource,
+		NewSpaceResource,
 	}
 }
 
 func (p *ConfluenceProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{}
+	return []func() datasource.DataSource{
+		NewSpaceDataSource,
+	}
 }
