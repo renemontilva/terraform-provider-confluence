@@ -2,6 +2,7 @@ package confluence
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"net/url"
 	"time"
@@ -50,7 +51,7 @@ func (a *API) requestAPI(method, path string, body []byte) (*http.Response, erro
 	bodyReader := bytes.NewReader(body)
 	req, err := http.NewRequest(method, path, bodyReader)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("requestAPI calls to http.NewRequest method and returns an error: %w", err)
 	}
 	// Set Headers
 	req.Header.Set("Content-Type", "application/json")
@@ -60,7 +61,7 @@ func (a *API) requestAPI(method, path string, body []byte) (*http.Response, erro
 	// Send request
 	resp, err := a.Client.Do(req)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("requestAPI calls to a.Client.Do method and returns an error: %w", err)
 	}
 
 	return resp, nil

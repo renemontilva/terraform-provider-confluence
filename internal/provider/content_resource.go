@@ -132,7 +132,6 @@ func (r *ContentResource) Create(ctx context.Context, req resource.CreateRequest
 		return
 	}
 
-	// save into the Terraform state.
 	data.Id = types.StringValue(content.Id)
 	// Write logs using the tflog package
 	// Documentation: https://terraform.io/plugin/log
